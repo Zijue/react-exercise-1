@@ -9,6 +9,17 @@
 </head>
 
 <body>
+    <script>
+        let docElement = document.documentElement;
+        function setRemUnit() {
+            // docElement.style.fontSize = '75px';
+            //如果屏幕宽度是750px/10 = 75px;
+            //如果屏幕宽度是375px/10 = 37.5px; 37.5*10rem = 375px
+            docElement.style.fontSize = docElement.clientWidth / 10 + 'px';
+        }
+        setRemUnit();
+        window.addEventListener('resize', setRemUnit);
+    </script>
     <div id="root"></div>
 </body>
 
