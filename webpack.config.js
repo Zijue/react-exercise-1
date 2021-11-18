@@ -13,10 +13,7 @@ module.exports = {
     devServer: {
         hot: true,
         static: path.join(__dirname, 'static'),
-        historyApiFallback: {
-            //在使用browerHistory的时候，刷新会报404，自动重定向到index.html
-            index: './index.html'
-        }
+        historyApiFallback: true //在使用browerHistory的时候，刷新会报404，自动重定向到index.html
     },
     resolve: {
         alias: {
@@ -67,6 +64,24 @@ module.exports = {
                         }
                     },
                     'less-loader'
+                ]
+            },
+            {
+                test: /\.css/, //解析antd的index.css文件
+                use: [
+                    "style-loader",
+                    {
+                        loader: 'css-loader',
+                        options: { importLoaders: 1 }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: ['autoprefixer']
+                            }
+                        }
+                    }
                 ]
             },
             {
