@@ -1,0 +1,1 @@
+export const VALIDATE = 'VALIDATE'; //用于向服务器发送验证请求

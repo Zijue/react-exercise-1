@@ -1,6 +1,6 @@
 import React from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
-import { HomeOutlined, ShopOutlined, UserOutlined } from '@ant-design/icons';
+import { NavLink } from 'react-router-dom';
+import { HomeOutlined, ShoppingOutlined, UserOutlined } from '@ant-design/icons';
 import './index.less';
 
 function Tabs() {
@@ -11,7 +11,7 @@ function Tabs() {
                 <span>首页</span>
             </NavLink>
             <NavLink to='/cart'>
-                <ShopOutlined />
+                <ShoppingOutlined />
                 <span>购物车</span>
             </NavLink>
             <NavLink to='/profile'>
