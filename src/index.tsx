@@ -10,6 +10,8 @@ import Cart from './routes/Cart';
 import Profile from './routes/Profile';
 import Tabs from './components/Tabs';
 import './style/common.less';
+import Register from './routes/Register';
+import Login from './routes/Login';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -19,6 +21,8 @@ ReactDOM.render(
                     <Route path='/' exact component={Home} />
                     <Route path='/cart' component={Cart} />
                     <Route path='/profile' component={Profile} />
+                    <Route path='/register' component={Register} />
+                    <Route path='/login' component={Login} />
                     <Redirect to='/' />
                 </Switch>
                 <Tabs />

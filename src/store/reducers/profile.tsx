@@ -31,6 +31,19 @@ function reducer(state: ProfileState = initialState, action: AnyAction): Profile
                     error: action.payload
                 }
             }
+        case actionTypes.CHANGE_AVATAR:
+            // state.user.avatar = action.payload;
+            return {
+                ...state,
+                user: { ...state.user, avatar: action.payload }
+            }
+        case actionTypes.LOGOUT:
+            return {
+                ...state,
+                loginState: LOGIN_TYPES.UN_LOGIN,
+                user: null,
+                error: null
+            }
         default:
             return state;
     }
