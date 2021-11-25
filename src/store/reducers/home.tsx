@@ -1,11 +1,14 @@
 import { AnyAction } from 'redux';
 import * as actionTypes from '../action-types';
+import { Slider } from '@/typings/slider';
 
 export interface HomeState {
     currentCategory: string;
+    sliders: Slider[];
 }
 let initialState: HomeState = {
-    currentCategory: 'all'
+    currentCategory: 'all',
+    sliders: []
 };
 function reducer(state: HomeState = initialState, action: AnyAction): HomeState {
     switch (action.type) {
@@ -15,6 +18,11 @@ function reducer(state: HomeState = initialState, action: AnyAction): HomeState 
                 ...state,
                 currentCategory: action.payload
             };
+        case actionTypes.GET_SLIDERS:
+            return {
+                ...state,
+                sliders: action.payload.data
+            }
         default:
             return state;
     }
