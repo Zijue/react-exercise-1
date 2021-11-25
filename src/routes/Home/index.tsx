@@ -6,6 +6,7 @@ import { HomeState } from '@/store/reducers/home';
 import actionCreators from '@/store/actionCreators/home';
 import HomeHeader from './components/HomeHeader';
 import HomeSliders from './components/HomeSliders';
+import './index.less';
 
 interface Params { };
 type Props = PropsWithChildren<RouteComponentProps<Params> & typeof actionCreators & ReturnType<typeof mapStateToProps>>;
