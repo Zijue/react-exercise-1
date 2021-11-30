@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { CombinedState } from '@/store/reducers';
@@ -7,18 +7,29 @@ import actionCreators from '@/store/actionCreators/home';
 import HomeHeader from './components/HomeHeader';
 import HomeSliders from './components/HomeSliders';
 import './index.less';
+import LessonList from './components/LessonList';
+import { loadMore } from '@/utils';
 
 interface Params { };
 type Props = PropsWithChildren<RouteComponentProps<Params> & typeof actionCreators & ReturnType<typeof mapStateToProps>>;
 function Home(props: Props) {
+    let homeContainerRef = useRef(null);
+    useEffect(() => {
+        loadMore(homeContainerRef.current, props.getLessons);
+    }, []);
     return (
         <>
             <HomeHeader
                 currentCategory={props.currentCategory}
                 setCurrentCategory={props.setCurrentCategory}
             />
-            <div className='home-container'>
+            <div className='home-container' ref={homeContainerRef}>
                 <HomeSliders sliders={props.sliders} getSliders={props.getSliders} />
+                <LessonList
+                    lessons={props.lessons}
+                    getLessons={props.getLessons}
+                    homeContainerRef={homeContainerRef}
+                />
             </div>
         </>
     )

@@ -39,6 +39,28 @@ function reducer(state: HomeState = initialState, action: AnyAction): HomeState 
                 ...state,
                 sliders: action.payload.data
             }
+        case actionTypes.SET_LESSONS_LOADING:
+            return {
+                ...state,
+                lessons: {
+                    ...state.lessons,
+                    loading: action.payload
+                }
+            }
+        case actionTypes.SET_LESSONS:
+            return {
+                ...state,
+                lessons: {
+                    ...state.lessons,
+                    loading: false,
+                    hasMore: action.payload.hasMore,
+                    list: [
+                        ...state.lessons.list,
+                        ...action.payload.list
+                    ],
+                    offset: state.lessons.offset + action.payload.list.length
+                }
+            }
         default:
             return state;
     }

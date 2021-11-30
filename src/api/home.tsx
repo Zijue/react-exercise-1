@@ -14,5 +14,5 @@ export function getLessons(
     offset: number = 0,
     limit: number = 5
 ) {
-    return axios.get(`/sliders/list?category=${currentCategory}&offset=${offset}&limit=${limit}`);
+    return axios.get(`/lesson/list?category=${currentCategory}&offset=${offset}&limit=${limit}`);
 }
