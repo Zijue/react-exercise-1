@@ -8,7 +8,8 @@ import HomeHeader from './components/HomeHeader';
 import HomeSliders from './components/HomeSliders';
 import './index.less';
 import LessonList from './components/LessonList';
-import { loadMore } from '@/utils';
+import { downRefresh, loadMore } from '@/utils';
+import { Spin } from 'antd';
 
 interface Params { };
 type Props = PropsWithChildren<RouteComponentProps<Params> & typeof actionCreators & ReturnType<typeof mapStateToProps>>;
@@ -16,9 +17,11 @@ function Home(props: Props) {
     let homeContainerRef = useRef(null);
     useEffect(() => {
         loadMore(homeContainerRef.current, props.getLessons);
+        downRefresh(homeContainerRef.current, props.refreshLessons);
     }, []);
     return (
         <>
+            <Spin size={"large"} />
             <HomeHeader
                 currentCategory={props.currentCategory}
                 setCurrentCategory={props.setCurrentCategory}

@@ -20,3 +20,65 @@ function debounce(fn: Function, wait: number) {
         $timeout = setTimeout(fn, wait);
     }
 }
+//下拉刷新
+export function downRefresh(domElement: HTMLElement, callback: Function) {
+    let startY: number; //存放开始下拉时的纵坐标
+    let distance: number; //本次下拉的总距离
+    let originalTop: number = domElement.offsetTop; //最初的时候此元素距离顶部的距离 50px
+    let startTop: number; //开始下拉的top值；初始时是50px，后续如果连续下拉，就不是50px
+    let backTimer: any; //下拉回退优化定时器
+    domElement.addEventListener('touchstart', function (event: TouchEvent) {
+        let touchMove = throttle(_touchMove, 50);
+        if (domElement.scrollTop === 0) { //如果此前的元素没有向上滚动才会进行下拉的逻辑处理
+            if (backTimer) {
+                clearInterval(backTimer);
+                backTimer = null;
+            }
+            startTop = domElement.offsetTop; //第一次的都是50px
+            startY = event.touches[0].pageY; //先记录点击时的Y坐标
+            domElement.addEventListener('touchmove', touchMove);
+            domElement.addEventListener('touchend', touchEnd);
+        }
+
+        function _touchMove(event: TouchEvent) {
+            let pageY = event.touches[0].pageY; //获取最新的Y坐标
+            if (pageY > startY) { //只处理下拉
+                distance = pageY - startY;
+                domElement.style.top = startTop + distance + 'px';
+            } else {
+                domElement.removeEventListener('touchmove', touchMove);
+                domElement.removeEventListener('touchend', touchEnd);
+            }
+        }
+        function touchEnd() {
+            domElement.removeEventListener('touchmove', touchMove);
+            domElement.removeEventListener('touchend', touchEnd);
+            if (distance > 30) { //下拉距离够30像素才发送请求刷新
+                callback();
+            }
+            backTimer = setInterval(() => { //下拉回弹
+                let currentTop = domElement.offsetTop;
+                if (currentTop - originalTop >= 1) {
+                    //如果距离最原始的顶部多于1个像素，回弹一个像素
+                    domElement.style.top = currentTop - 1 + 'px';
+                } else {
+                    backTimer && clearInterval(backTimer);
+                    domElement.style.top = originalTop + 'px';
+                }
+            }, 1)
+        }
+    });
+}
+//节流函数
+function throttle(fn: Function, delay: number) {
+    let prev = Date.now();
+    return function () {
+        const context = this;
+        let args = arguments;
+        let now = Date.now();
+        if (now - prev >= delay) {
+            fn.apply(context, args);
+            prev = now;
+        }
+    }
+}
