@@ -16,3 +16,11 @@ export function getLessons(
 ) {
     return axios.get(`/lesson/list?category=${currentCategory}&offset=${offset}&limit=${limit}`);
 }
+/**
+ * 获取课程详情
+ * @param id 课程id
+ * @returns 
+ */
+export function getLesson<T>(id: string) {
+    return axios.get<T, T>(`/lesson/${id}`);
+}
