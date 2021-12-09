@@ -13,7 +13,7 @@ export function loadMore(domElement: HTMLElement, callback: Function) {
     domElement.addEventListener('scroll', debounce(_loadMore, 500)); //给容器绑定scroll事件
 }
 //防抖函数 -- 在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
-function debounce(fn: Function, wait: number) {
+export function debounce(fn: Function, wait: number) {
     let $timeout: any;
     return function () {
         if ($timeout) clearTimeout($timeout);
@@ -70,7 +70,7 @@ export function downRefresh(domElement: HTMLElement, callback: Function) {
     });
 }
 //节流函数 -- 规定在一个单位时间内，只能触发一次函数。如果这个单位时间内触发多次函数，只有一次生效。
-function throttle(fn: Function, delay: number) {
+export function throttle(fn: Function, delay: number) {
     let prev = Date.now();
     return function () {
         const context = this;
