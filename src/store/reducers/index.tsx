@@ -1,9 +1,11 @@
-import { combineReducers, ReducersMapObject } from 'redux';
+import { ReducersMapObject } from 'redux';
 import home from './home';
 import cart from './cart';
 import profile from './profile';
 import { connectRouter } from 'connected-react-router';
 import history from '@/history';
+import { combineReducers } from 'redux-immer';
+import produce from 'immer';
 
 let reducers: ReducersMapObject = {
     router: connectRouter(history),
@@ -19,5 +21,5 @@ type CombinedState = {
     home | cart | profile: HomeState | CartState | ProfileState
 }
  */
-let combineReducer = combineReducers(reducers);
+let combineReducer = combineReducers(produce, reducers);
 export default combineReducer;

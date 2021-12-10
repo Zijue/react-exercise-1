@@ -23,6 +23,13 @@ function LessonList(props: Props, forwardRef: any) {
         }
         forwardRef.current = forceUpdate; //将LessonList强制更新方法通过Ref传给父组件
     }, []);
+    //需要添加这个effect用于强制更新，原因是：
+    //  需要利用useEffect的执行时机在dom渲染完成之后，
+    //  如果不在dom渲染完成后调用LessonList强制更新组件，那么homeContainer将会是null，
+    //  导致start、end都是0，无法正确渲染列表页
+    useEffect(() => {
+        forceUpdate();
+    }, []);
     //先获取1rem的值：1rem = 37.5px
     const remSize: number = parseFloat(document.documentElement.style.fontSize); //实际1rem的值
     //计算每个条目实际的高度 = 每个条目的高度 / 1个rem的高度 * 1个rem对应的px值

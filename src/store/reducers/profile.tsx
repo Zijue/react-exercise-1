@@ -17,33 +17,23 @@ function reducer(state: ProfileState = initialState, action: AnyAction): Profile
     switch (action.type) {
         case actionTypes.VALIDATE:
             if (action.payload.success) { //当前用户已经登录
-                return {
-                    ...state,
-                    loginState: LOGIN_TYPES.LOGIN_ED,
-                    user: action.payload.data,
-                    error: null
-                }
+                state.loginState = LOGIN_TYPES.LOGIN_ED;
+                state.user = action.payload.data;
+                state.error = null;
             } else {
-                return {
-                    ...state,
-                    loginState: LOGIN_TYPES.UN_LOGIN,
-                    user: null,
-                    error: action.payload
-                }
+                state.loginState = LOGIN_TYPES.UN_LOGIN;
+                state.user = null;
+                state.error = action.payload;
             }
+            return state;
         case actionTypes.CHANGE_AVATAR:
-            // state.user.avatar = action.payload;
-            return {
-                ...state,
-                user: { ...state.user, avatar: action.payload }
-            }
+            state.user.avatar = action.payload;
+            return state;
         case actionTypes.LOGOUT:
-            return {
-                ...state,
-                loginState: LOGIN_TYPES.UN_LOGIN,
-                user: null,
-                error: null
-            }
+            state.loginState = LOGIN_TYPES.UN_LOGIN;
+            state.user = null;
+            state.error = null;
+            return state;
         default:
             return state;
     }

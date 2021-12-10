@@ -29,49 +29,26 @@ let initialState: HomeState = {
 function reducer(state: HomeState = initialState, action: AnyAction): HomeState {
     switch (action.type) {
         case actionTypes.SET_CURRENT_CATEGORY:
-            // state.currentCategory = action.payload;
-            return {
-                ...state,
-                currentCategory: action.payload
-            };
+            state.currentCategory = action.payload;
+            return state;
         case actionTypes.GET_SLIDERS:
-            return {
-                ...state,
-                sliders: action.payload.data
-            }
+            state.sliders = action.payload.data;
+            return state;
         case actionTypes.SET_LESSONS_LOADING:
-            return {
-                ...state,
-                lessons: {
-                    ...state.lessons,
-                    loading: action.payload
-                }
-            }
+            state.lessons.loading = action.payload;
+            return state;
         case actionTypes.SET_LESSONS:
-            return {
-                ...state,
-                lessons: {
-                    ...state.lessons,
-                    loading: false,
-                    hasMore: action.payload.hasMore,
-                    list: [
-                        ...state.lessons.list,
-                        ...action.payload.list
-                    ],
-                    offset: state.lessons.offset + action.payload.list.length
-                }
-            }
+            state.lessons.loading = false;
+            state.lessons.hasMore = action.payload.hasMore;
+            state.lessons.list.push(...action.payload.list);
+            state.lessons.offset += action.payload.list.length;
+            return state;
         case actionTypes.REFRESH_LESSONS:
-            return {
-                ...state,
-                lessons: {
-                    ...state.lessons,
-                    loading: false,
-                    hasMore: action.payload.hasMore,
-                    list: action.payload.list,
-                    offset: action.payload.list.length
-                }
-            }
+            state.lessons.loading = false;
+            state.lessons.hasMore = action.payload.hasMore;
+            state.lessons.list = action.payload.list;
+            state.lessons.offset = action.payload.list.length
+            return state;
         default:
             return state;
     }
