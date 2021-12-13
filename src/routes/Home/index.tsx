@@ -22,7 +22,16 @@ function Home(props: Props) {
         //绑定滚动事件更新课程列表组件，实现虚拟列表的动态范围加载
         const forceUpdateLessonList = throttle(lessonListRef.current, 20);
         homeContainerRef.current.addEventListener('scroll', forceUpdateLessonList);
+        homeContainerRef.current.addEventListener('scroll', () => {
+            sessionStorage.setItem('scrollTop', homeContainerRef.current.scrollTop);
+        })
     }, []);
+    useEffect(() => {
+        let scrollTop = sessionStorage.getItem('scrollTop');
+        if (scrollTop) {
+            homeContainerRef.current.scrollTop = scrollTop;
+        }
+    }, [])
     return (
         <>
             <Spin size={"large"} />
