@@ -17,5 +17,9 @@
   },
   "include": [
     "./src/**/*"
+  ],
+  "files": [ //修复找不到redux-persist声明文件的问题
+    "./node_modules/redux-persist/types/integration/react.d.ts",
+    "./node_modules/redux-persist/types/storage/index.d.ts"
   ]
 }
